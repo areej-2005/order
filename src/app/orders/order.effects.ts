@@ -8,20 +8,15 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 @Injectable()
 export class OrderEffects {
 
-  constructor(
+ constructor(
     private actions$: Actions,
     private orderService: OrderService
-  ) {}
+  ) {console.log('service:'+JSON.stringify(this.orderService))}
 
   loadOrders$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadOrders), 
-      mergeMap(() =>
         this.orderService.getOrders().pipe( 
           map(orders => loadOrdersSuccess({ orders })), 
           catchError((error) => of(loadOrdersFailure({ error }))) 
         )
-      )
-    )
-  );
+      );;
 }
